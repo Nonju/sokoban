@@ -1,5 +1,5 @@
 # sokoban
-Simple sokoban game written in python3
+Simple sokoban game written in Python 3
 
-Start by running `npm start`
+Start by running `make start`
 
