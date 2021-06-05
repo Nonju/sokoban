@@ -6,9 +6,11 @@ from events import GOTOLEVELSELECT
 from utils import KeyPressHandler
 
 class Menu:
-    def __init__(self):
+    def __init__(self, surface):
         super().__init__()
         self.newGameEvent = pygame.event.Event(GOTOLEVELSELECT)
+
+        self.surface = surface
 
         self.active = 0 # Active option
         self.options = [
@@ -47,13 +49,13 @@ class Menu:
         elif KeyPressHandler.enter():
             self.options[self.active]['click']()
 
-    def draw(self, surface):
-        surface.fill(colors.CORNFLOWERBLUE) # Should this be placed in __init__ instead?
+    def draw(self):
+        self.surface.fill(colors.CORNFLOWERBLUE) # Should this be placed in __init__ instead?
 
         y = 0
 
         # Draw header
-        surface.blit(self.headerSurf, (0, y))
+        self.surface.blit(self.headerSurf, (0, y))
         y += self.getHeaderFontSize()
 
         # Draw menu options
@@ -75,7 +77,7 @@ class Menu:
             active = index == self.active
             font = self.activeFont if active else self.inactiveFont
             textSurface = font.render(option['title'], False, colors.ACTIVETEXT if active else colors.INACTIVETEXT)
-            surface.blit(textSurface, (0, y))
+            self.surface.blit(textSurface, (0, y))
             y += 40 if active else 30
 
 

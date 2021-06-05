@@ -25,7 +25,7 @@ pygame.display.set_caption('Sokoban')
 
 def main():
     currentState = ScreenState.MENU
-    Menu = menu.Menu()
+    Menu = menu.Menu(DISPLAYSURF)
     LevelSelect = None
     Game = None
 
@@ -36,22 +36,22 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == GOTOLEVELSELECT:
-                LevelSelect = levelselect.LevelSelect()
+                LevelSelect = levelselect.LevelSelect(DISPLAYSURF)
                 currentState = ScreenState.LEVELSELECT
             elif event.type == GOTOGAME:
                 if bool(event.new):
-                    Game = game.Game(level=event.level)
+                    Game = game.Game(DISPLAYSURF, level=event.level)
                 currentState = ScreenState.GAME
 
         if currentState == ScreenState.MENU:
             Menu.update(events)
-            Menu.draw(DISPLAYSURF)
+            Menu.draw()
         elif currentState == ScreenState.LEVELSELECT:
             LevelSelect.update(events)
-            LevelSelect.draw(DISPLAYSURF)
+            LevelSelect.draw()
         elif currentState == ScreenState.GAME:
             Game.update(events)
-            Game.draw(DISPLAYSURF)
+            Game.draw()
         else: break
 
         KeyPressHandler.update(events)

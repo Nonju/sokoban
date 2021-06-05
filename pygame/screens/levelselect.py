@@ -9,8 +9,10 @@ from utils import KeyPressHandler
 LEVEL_DIR = './levels/'
 
 class LevelSelect:
-    def __init__(self):
+    def __init__(self, surface):
         super().__init__()
+
+        self.surface = surface
 
         self.active = 0 # Active level selection
         self.levels = self.listLevels()
@@ -47,13 +49,13 @@ class LevelSelect:
             self.startGame(level)
 
 
-    def draw(self, surface):
-        surface.fill(colors.CORNFLOWERBLUE)
+    def draw(self):
+        self.surface.fill(colors.CORNFLOWERBLUE)
 
         y = 0
 
         # Draw header
-        surface.blit(self.headerSurf, (0, y))
+        self.surface.blit(self.headerSurf, (0, y))
         y += self.getHeaderFontSize()
 
         # Draw menu options
@@ -75,6 +77,6 @@ class LevelSelect:
             active = index == self.active
             font = self.activeFont if active else self.inactiveFont
             textSurface = font.render(level, False, colors.ACTIVETEXT if active else colors.INACTIVETEXT)
-            surface.blit(textSurface, (0, y))
+            self.surface.blit(textSurface, (0, y))
             y += 40 if active else 30
 
