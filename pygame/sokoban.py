@@ -7,9 +7,12 @@ from constants import colors
 from events import *
 from states import ScreenState
 from screens import menu, levelselect, game
-from utils import KeyPressHandler
+from utils import KeyPressHandler, ControllerHandler
 
 pygame.init()
+if pygame.joystick.get_count():
+    print('Found joystick - Initializing')
+    ControllerHandler.init()
 
 FPS = 30
 FramePerSec = pygame.time.Clock()
