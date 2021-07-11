@@ -7,6 +7,10 @@ J_UP = ControllerHandler.J_UP
 J_DOWN = ControllerHandler.J_DOWN
 J_RIGHT = ControllerHandler.J_RIGHT
 J_LEFT = ControllerHandler.J_LEFT
+J_A = ControllerHandler.J_A
+J_B = ControllerHandler.J_B
+J_SELECT = ControllerHandler.J_SELECT
+J_START = ControllerHandler.J_START
 
 class KeyPressHandler:
     lastPressed = set()
@@ -18,13 +22,11 @@ class KeyPressHandler:
                 cls.lastPressed.add(event.key)
             elif event.type == pygame.KEYUP:
                 cls.lastPressed.remove(event.key)
-            elif event.type == pygame.JOYAXISMOTION and ControllerHandler.active():
-
+            elif ControllerHandler.active() and event.type in ControllerHandler.getEvents():
                 for key in ControllerHandler.getKeys():
                     if key in cls.lastPressed:
                         cls.lastPressed.remove(key)
                 cls.lastPressed.update(ControllerHandler.getPressed())
-
 
     @classmethod
     def pressed(cls, keys, single=False):
@@ -38,10 +40,12 @@ class KeyPressHandler:
             return any((pressed_keys[key] or key in controller_pressed_keys) and key not in cls.lastPressed for key in keys)
         return any((pressed_keys[key] or key in controller_pressed_keys) for key in keys)
 
+
     # Helpers
     @classmethod
     def enter(cls, single=True):
-        return cls.pressed(K_RETURN, single=single)
+        keys = [K_RETURN, J_A]
+        return cls.pressed(keys, single=single)
 
     @classmethod
     def up(cls, single=True):
