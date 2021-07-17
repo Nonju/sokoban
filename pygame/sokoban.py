@@ -19,8 +19,9 @@ FramePerSec = pygame.time.Clock()
 
 
 # Screen
-SCREEN_WIDTH = 1024
-SCREEN_HEIGHT = 800
+screen_info = pygame.display.Info()
+SCREEN_WIDTH = min(screen_info.current_w, 1024)
+SCREEN_HEIGHT = min(screen_info.current_h, 800)
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 DISPLAYSURF.fill(colors.BROWN)
 pygame.display.set_caption('Sokoban')
